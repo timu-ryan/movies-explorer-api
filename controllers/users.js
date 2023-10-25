@@ -6,6 +6,12 @@ const {
   SUCCESS_CODE,
   CREATED_CODE,
 } = require('../errors/error-codes');
+const {
+  badRequest,
+  notFoundErrorCard,
+  conflictError,
+  internalServerError,
+} = require('../errors/error-texts');
 const NotFoundError = require('../errors/not-found-err');
 const InternalServerError = require('../errors/internal-server-err');
 const ConflictError = require('../errors/conflict-err');
@@ -34,15 +40,15 @@ const createUser = (req, res, next) => {
   bcrypt.hash(newUserData.password, 10)
     .then((hash) => User.create({ ...newUserData, password: hash }))
     .then(({
-      name, about, avatar, email,
+      name, email,
     }) => res.status(CREATED_CODE).send({
-      name, about, avatar, email,
+      name, email,
     }))
     .catch((err) => {
       if (err.code === 11000) {
-        next(new ConflictError('Пользователь с таким email уже существует'));
+        next(new ConflictError(conflictError));
       } else if (err.name === 'ValidationError') {
-        next(new BadRequest('invalid data'));
+        next(new BadRequest(badRequest));
       } else {
         next(err);
       }
@@ -51,19 +57,21 @@ const createUser = (req, res, next) => {
 
 const getMyProfile = (req, res, next) => User.findById(req.user._id)
   .then((myProfile) => res.status(SUCCESS_CODE).send(myProfile))
-  .catch(() => next(new InternalServerError('Server Error')));
+  .catch(() => next(new InternalServerError(internalServerError)));
 
 const updateProfile = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, req.body, { new: true })
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('Запрашиваемый пользователь не найден');
+        throw new NotFoundError(notFoundErrorCard);
       }
       return res.status(SUCCESS_CODE).send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequest('invalid data'));
+      if (err.code === 11000) {
+        next(new ConflictError(conflictError));
+      } else if (err.name === 'ValidationError') {
+        next(new BadRequest(badRequest));
       } else {
         next(err);
       }

@@ -8,6 +8,7 @@ const routes = require('./routes/index');
 const { errorCatchMiddleware } = require('./middlewares/catchErrors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { limiter } = require('./middlewares/limiter');
+const dbAddress = require('./utils/db-address');
 
 // const { authMiddleware } = require('./middlewares/authMid');
 
@@ -20,7 +21,7 @@ const allowedCors = [
   'https://timuryanst.nomoredomainsrocks.ru',
 ];
 
-mongoose.connect(NODE_ENV === 'production' ? DB_ADDRESS : 'mongodb://127.0.0.1:27017/bitfilmsdb', {
+mongoose.connect(NODE_ENV === 'production' ? DB_ADDRESS : dbAddress, {
   useNewUrlParser: true,
 }).then(() => {
   console.log('connected to db');

@@ -1,4 +1,3 @@
-const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
 const userRoutes = require('./users');
 const movieRoutes = require('./movies');
@@ -7,34 +6,31 @@ const {
   createUser,
   login,
 } = require('../controllers/users');
+const {
+  signinValidation,
+  signupValidation,
+} = require('../middlewares/validation');
+const {
+  notFoundUserError,
+  serverCrashedError,
+} = require('../errors/error-texts');
 const NotFoundError = require('../errors/not-found-err');
 
 router.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
+    throw new Error(serverCrashedError);
   }, 0);
 });
 
-router.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
+router.post('/signin', signinValidation, login);
 
-router.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), createUser);
+router.post('/signup', signupValidation, createUser);
 
 router.use('/users', userRoutes);
 router.use('/movies', movieRoutes);
 
 router.use('/*', auth, () => {
-  throw new NotFoundError('Нет пользователя с таким id');
+  throw new NotFoundError(notFoundUserError);
 });
 
 module.exports = router;
