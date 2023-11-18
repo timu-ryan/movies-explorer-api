@@ -19,6 +19,8 @@ const allowedCors = [
   'localhost:3000',
   'https://api.timuryanst.nomoredomainsrocks.ru',
   'https://timuryanst.nomoredomainsrocks.ru',
+  'domino.nomoredomainsrocks.ru',
+  'api.domino.nomoredomainsrocks.ru',
 ];
 
 mongoose.connect(NODE_ENV === 'production' ? DB_ADDRESS : dbAddress, {
