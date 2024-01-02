@@ -16,6 +16,7 @@ const { PORT = 3000, NODE_ENV, DB_ADDRESS } = process.env;
 const allowedCors = [
   'https://praktikum.tk',
   'http://praktikum.tk',
+  'http://localhost:3000',
   'localhost:3000',
   'https://api.timuryanst.nomoredomainsrocks.ru',
   'https://timuryanst.nomoredomainsrocks.ru',
