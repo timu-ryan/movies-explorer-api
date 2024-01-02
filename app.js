@@ -21,6 +21,8 @@ const allowedCors = [
   'https://timuryanst.nomoredomainsrocks.ru',
   'https://domino.nomoredomainsrocks.ru',
   'https://api.domino.nomoredomainsrocks.ru',
+  'https://tim.nomoredomainsrocks.ru',
+  'https://api.tim.nomoredomainsrocks.ru',
 ];
 
 mongoose.connect(NODE_ENV === 'production' ? DB_ADDRESS : dbAddress, {
