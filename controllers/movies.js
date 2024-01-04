@@ -33,8 +33,8 @@ const getMovies = (req, res, next) => Movie.find({ owner: req.user._id })
   .catch(() => next(new InternalServerError(internalServerError)));
 
 const deleteMovieById = (req, res, next) => {
-  const { cardId } = req.params;
-  return Movie.findById(cardId)
+  const { movieId } = req.params; // мб должны доставать просто id, movieId
+  return Movie.findById(movieId)
     .then((card) => {
       if (!card) {
         throw new NotFoundError(notFoundMovieError);
