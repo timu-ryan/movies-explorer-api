@@ -35,16 +35,15 @@ const postMovieValidation = celebrate({
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
     thumbnail: Joi.string().required().regex(linkRegEx),
-    movieId: Joi.number().required(),
+    movieId: Joi.string().required().hex().length(24),
   }),
 });
 
 const deleteMovieValidation = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.number().required(),
+    movieId: Joi.string().required().hex().length(24),
   }),
 });
-
 module.exports = {
   signinValidation,
   signupValidation,
