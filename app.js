@@ -20,8 +20,8 @@ const allowedCors = [
   'localhost:3000',
   'https://api.timuryanst.nomoredomainsrocks.ru',
   'https://timuryanst.nomoredomainsrocks.ru',
-  'https://domino.nomoredomainsrocks.ru',
-  'https://api.domino.nomoredomainsrocks.ru',
+  'domino.nomoredomainsrocks.ru',
+  'api.domino.nomoredomainsrocks.ru',
   'https://tim.nomoredomainsrocks.ru',
   'https://api.tim.nomoredomainsrocks.ru',
 ];
