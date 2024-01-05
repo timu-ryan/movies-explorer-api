@@ -33,7 +33,7 @@ const getMovies = (req, res, next) => Movie.find({ owner: req.user._id })
   .catch(() => next(new InternalServerError(internalServerError)));
 
 const deleteMovieById = (req, res, next) => {
-  const { _id } = req.params; // FIXME: _id
+  const { _id } = req.params; // FIXME: _id or movieId?
   return Movie.findById(_id)
     .then((movie) => {
       if (!movie) {
