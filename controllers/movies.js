@@ -33,16 +33,16 @@ const getMovies = (req, res, next) => Movie.find({ owner: req.user._id })
   .catch(() => next(new InternalServerError(internalServerError)));
 
 const deleteMovieById = (req, res, next) => {
-  const { movieId } = req.params; // мб должны доставать просто id, movieId
-  return Movie.findById(movieId) // and here
-    .then((card) => {
-      if (!card) {
+  const { _id } = req.params; // FIXME: _id
+  return Movie.findById(_id)
+    .then((movie) => {
+      if (!movie) {
         throw new NotFoundError(notFoundMovieError);
       }
-      if (!card.owner.equals(req.user._id)) {
+      if (!movie.owner.equals(req.user._id)) { // эта проверка не нужна вроде
         throw new NoRights(noRights);
       }
-      card.deleteOne()
+      movie.deleteOne()
         .then(() => res.status(SUCCESS_CODE).send({ message: 'фильм удален' }))
         .catch(next);
     })
