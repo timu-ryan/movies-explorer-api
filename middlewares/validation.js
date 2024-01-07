@@ -25,23 +25,24 @@ const patchUserValidation = celebrate({
 
 const postMovieValidation = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required(),
-    director: Joi.string().required(),
-    duration: Joi.number().required(),
-    year: Joi.string().required(),
-    description: Joi.string().required(),
+    // country: Joi.string().required(),
+    // director: Joi.string().required(),
+    // duration: Joi.number().required(),
+    // year: Joi.string().required(),
+    // description: Joi.string().required(),
     image: Joi.string().required().regex(linkRegEx),
     trailerLink: Joi.string().required().regex(linkRegEx),
     nameRU: Joi.string().required(),
-    nameEN: Joi.string().required(),
-    thumbnail: Joi.string().required().regex(linkRegEx),
-    movieId: Joi.string().required().hex().length(24),
+    // nameEN: Joi.string().required(),
+    // thumbnail: Joi.string().required().regex(linkRegEx),
+    // movieId: Joi.string().required().hex().length(24),
   }),
 });
 
 const deleteMovieValidation = celebrate({
   params: Joi.object().keys({
     movieId: Joi.string().required().hex().length(24),
+    // наверное здесь что-то должно быть
   }),
 });
 module.exports = {
