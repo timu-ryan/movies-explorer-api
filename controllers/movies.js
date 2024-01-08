@@ -33,8 +33,9 @@ const getMovies = (req, res, next) => Movie.find({ owner: req.user._id })
   .catch(() => next(new InternalServerError(internalServerError)));
 
 const deleteMovieById = (req, res, next) => {
-  const { _id } = req.params; // FIXME: _id or movieId?
-  return Movie.findById(_id)
+  const { filmId } = req.params; // FIXME: _id or movieId?
+  // этот id приходит из строки запроса и по нему мы ищем среди _id
+  return Movie.findById(filmId)
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError(notFoundMovieError);
